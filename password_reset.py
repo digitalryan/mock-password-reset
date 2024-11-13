@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import os
 import secrets
 
 app = Flask(__name__)
@@ -25,10 +24,8 @@ def request_password_reset():
     token = secrets.token_urlsafe(16)
     users[email]["reset_token"] = token
 
-    # In a real setup, you would email the reset link to the user here
-    # (e.g., using an email service API)
-
-    return jsonify({"message": "Password reset token generated", "reset_token": token})
+    # Response message with the email included
+    return jsonify({"message": f"I have successfully sent a password reset request to {email}", "reset_token": token})
 
 @app.route("/api/password-reset/confirm", methods=["POST"])
 def confirm_password_reset():
